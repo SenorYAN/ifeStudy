@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document10</title>
+  <style>
+    #container{
+      padding: 20px;
+      border: 1px solid #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .item{
+      width: 150px;
+      border: 1px solid #f00;
+      box-sizing: border-box;
+    }
+    #item1{
+      height: 120px;
+    }
+    #item2{
+      height: 100px;
+    }
+    #item3{
+      height: 40px;
+    }
+    #item4{
+      height: 200px;
+      border-color: #00f;
+    }
+    @media (max-width : 640px){
+      .item{
+        margin-bottom: 10px;
+      }
+      #item4{
+        -webkit-order: -1;
+        -moz-order: -1;
+        -ms-order: -1;
+        -o-order: -1;
+        order: -1; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="item" id="item1">1</div>
+    <div class="item" id="item2">2</div>
+    <div class="item" id="item3">3</div>
+    <div class="item" id="item4">4</div>
+  </div>
+</body>
+</html>
