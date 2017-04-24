@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body, .container{
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+    .container{
+      background-color: #dddddd;
+      position: relative;
+    }
+    .pic-wrapper{
+      /*width: 150px;*/
+      padding: 4px; 
+      margin-bottom: 10px;
+      background: #fff;
+      position: absolute;
+      box-sizing: border-box;
+    }
+    .pic-wrapper img{
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container"></div>
+
+  <script>
+    (function() {
+      class WaterFall{
+        constructor(){
+          this.colWidth = 150;
+          this.colHeights = [20, 20, 20, 20, 20 ,20];
+          this.count = 400;
+          this.imgs = [];
+          this.init().bindScroll().bindResize();
+        }
+        init() {
+          let screenWidth = window.innerWidth || document.documentElement.clientWidth,
+              screenHeight = window.innerHeight || document.documentElement.clientHeight;
+          this.setColWidth();
+          return this;
+        }
+        setColWidth() {
+          const colWidth = (this.getScreenWidth() - 40) / 6;
+          this.colWidth = colWidth;
+          this.setInit();
+          this.loadPics();
+        }
+        setInit() {
+          document.getElementById('container').innerHTML = '';
+          this.colHeights = [20, 20, 20, 20, 20 ,20];
+          this.imgs.length = 0;
+        }
+        loadPics() {
+          let imgs = [];
+          for(let i=0; i<this.count; i++){
+            const img = new Image();
+            img.src = `./images/timg${i%9+1}.jpeg`;
+            imgs.push(new Promise((resolve, reject) => {
+                img.onload = ()=>{
+                  this.imgs.push({
+                    img,
+                    index: i,
+                    width : img.width,
+                    height : img.height
+                  });
+                  resolve();
+                }
+            }))
+          }
+          Promise.all(imgs).then(() =>{
+            this.imgs.sort((a,b) => a.index-b.index);
+            console.log(this.imgs);
+            this.checkWaterFall();
+          }, (err) =>{
+              console.log('ERROR:' + err);
+          })
+        }
+        minHeightSelect() {
+          return this.colHeights.reduce((a,b) => {
+            return a>b?b:a 
+          })
+        }
+        maxHeightSelect() {
+          return this.colHeights.reduce((a,b) => {
+            return a<b?b:a 
+          })
+        }
+        getScreenWidth() {
+          console.log('可视区大小：', window.innerWidth);
+          return window.innerWidth;
+        }
+        getScreenHeight() {
+          console.log('可视区大小：', window.innerHeight);
+          return window.innerHeight;
+        }
+        getScrollTop() {
+          var scrollTop = window.pageYOffset|| document.documentElement.scrollTop || document.body.scrollTop;
+          console.log('上滚距离：', scrollTop);
+          return scrollTop;
+        }
+        checkWaterFall() {
+          if(this.getScreenHeight() > this.maxHeightSelect()){
+            this.renderPic();
+          }else if(parseInt(document.body.style.height) - this.getScrollTop() - this.getScreenHeight() < 200){
+            this.renderPic();
+          }
+        }
+        bindScroll() {
+          document.addEventListener('scroll', ()=>{
+            if(parseInt(document.body.style.height) - this.getScrollTop() - this.getScreenHeight() < 300){
+              this.renderPic();
+            }
+          })
+          return this;
+        }
+        bindResize() {
+          window.onresize = () =>{
+            this.setColWidth();
+          }
+        }
+        renderPic() {
+          // 图片列表中选择图片
+          const picIndex = document.getElementsByClassName('pic-wrapper').length;
+          console.log( `选中第${picIndex}张`);
+          // 高度最低的列数
+          const currentMinHeight = this.minHeightSelect();
+          const colIndex = this.colHeights.indexOf(currentMinHeight);
+          console.log( `第${colIndex}列最矮`);
+          //创建图片
+          const ndDiv = document.createElement('div');
+          const ndContainer = document.getElementById('container');
+          ndDiv.className = "pic-wrapper";
+          ndDiv.style.width = `${this.colWidth-10}px`;
+          ndDiv.appendChild(this.imgs[picIndex].img);
+          ndDiv.style.left = `${20 + this.colWidth * colIndex}px`;
+          ndDiv.style.top = `${currentMinHeight}px`; 
+          
+          //改变图片列高度数组
+          this.colHeights[colIndex] += (Math.round(this.imgs[picIndex].height / this.imgs[picIndex].width * (this.colWidth - 8)) + 20);
+          console.log('高度数组：' + this.colHeights);
+          if(this.getScreenHeight() < this.maxHeightSelect()){
+              document.body.style.height = this.maxHeightSelect() + 10 + 'px';
+          }
+          //加入Dom
+          ndContainer.appendChild(ndDiv);
+          this.checkWaterFall();
+        }
+      }
+
+      new WaterFall();
+    })();
+  </script>
+</body>
+</html>
