@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div class="container">
+    <div class="left" id="left">left<div class="drag" id="drag"></div></div>
+    <div class="right">right</div>
+</div>
+<style>
+    .container {
+        width: 100%;
+        height: 500px;
+        min-width: 500px;
+        display: flex;
+        overflow: scroll;
+    }
+    .left, .right {
+        border: 1px solid #ccc;
+        font-size: 22px;
+        color: #333;
+        font-weight: bold;
+        text-align: center;
+        line-height: 500px;
+        box-sizing: border-box;
+    }
+    .left{
+        min-width:100px;
+        max-width:300px;
+        position: relative;
+    }
+    .drag{
+      width: 10px;
+      height: 100%;
+      cursor: ew-resize;
+      position: absolute;
+      top: 0;
+      right: -5px;
+    }
+    .right {
+        border-left: 0 none;
+        flex: 1;
+    }
+</style>
+<script>
+    (function(){
+        const ndLeft = document.getElementById('left');
+        const ndDrag = document.getElementById('drag');
+        let startPos, startWidth;
+
+        const leftStretchTo = function(width){
+            ndLeft.style.width = width + 'px';
+        };
+        
+        const mouseMoveHandler = function(e){
+            if(!startPos){
+                return;
+            }
+            const width = e.pageX - startPos ;
+            leftStretchTo(width + startWidth);
+        };
+
+        ndDrag.addEventListener('mousedown', function(e){
+            e.preventDefault();
+            console.log('down');
+            startPos = e.pageX;
+            startWidth = ndLeft.offsetWidth;
+            console.log(startWidth);
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', function(e){
+                document.removeEventListener('mousemove', mouseMoveHandler);
+            })
+        });
+    })();
+
+</script>
+</body>
+</html>
