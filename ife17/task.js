@@ -57,7 +57,14 @@ var pageState = {
 function renderChart() {
   console.log(pageState, chartData);
   const aqiChartTiltle = document.getElementById('aqi-chart-title');
+  const aqiChart = document.getElementById('aqi-chart');
   aqiChartTiltle.innerText = `${pageState.nowSelectCity}市空气质量指数图`;
+  const renderData = chartData[pageState.nowSelectCity][pageState.nowGraTime];
+  const renderDom = renderData.map((item) =>{
+     return `<div class="aqi" title=${item.time} style="height: ${item.aqi}px"></div>`
+  });
+
+  aqiChart.innerHTML = renderDom.join('');
 }
 
 /**
