@@ -55,7 +55,7 @@ var pageState = {
  * 渲染图表
  */
 function renderChart() {
-  console.log(pageState);
+  console.log(pageState, chartData);
   const aqiChartTiltle = document.getElementById('aqi-chart-title');
   aqiChartTiltle.innerText = `${pageState.nowSelectCity}市空气质量指数图`;
 }
@@ -124,8 +124,7 @@ function initCitySelector() {
 function initAqiChartData() {
   // 将原始的源数据处理成图表需要的数据格式
   // 处理好的数据存到 chartData 中
-  console.log(aqiSourceData);
-  console.log(Object.keys(aqiSourceData).map((item) =>{
+  chartData = Object.keys(aqiSourceData).map((item) =>{
     const obj = {
       day: [],
       week: [],
@@ -152,7 +151,7 @@ function initAqiChartData() {
         sum = 0;
       }
       //处理每月
-      if(now > day && i < obj.day.length){
+      if(now > day && i < obj.day.length-1){
         day = now;
       }else{
         obj.month.push(Math.round(sum1/day));
@@ -160,8 +159,6 @@ function initAqiChartData() {
         sum1 = 0;
       }
     })
-    
-    //处理每月
 
     return {
       city: item,
@@ -169,7 +166,9 @@ function initAqiChartData() {
     }
   }).reduce((a, b) => {
     return a[b['city']] = b['data'], a;
-  }, {}))
+  }, {});
+
+  renderChart();
 }
 
 /**
