@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFE JavaScript Task 01</title>
+  </head>
+  <style>
+    html, body{
+      height: 96%;
+      margin: 0;
+      padding: 0;
+    }
+    body{
+      display: flex;
+      flex-direction: column;
+      padding: 2%;
+    }
+    fieldset{
+      height: 20%;
+      border-radius: 4px;
+      padding: 20px;
+      box-shadow: 0 0 2px 2px rgba(200,200,200,0.8);
+      box-sizing: border-box;
+    }
+    .aqi-chart-wrap{
+      height: 70%;
+      border: 1px solid #000;
+      border-radius: 4px;
+      padding: 0 20px;
+      margin: 20px 2px 2px 2px;
+      box-shadow: 0 0 2px 2px rgba(200,200,200,0.8);
+      box-sizing: border-box;
+    }
+    #aqi-chart-title{
+      text-align: center;
+      height: 4%;
+      margin-top: 1%;
+    }
+    .aqi-chart{
+      height: 95%;
+      display: flex;
+      align-items: flex-end;
+    }
+    .aqi{
+      width: 10px;
+      height: 100px;
+      transition: height .5s;
+      margin-right: 10px;
+      background-color: grey;
+    }
+  </style>
+<body>
+  <fieldset id="form-gra-time">
+    <legend>请选择日期粒度和城市：</legend>
+    <label for="gra-day">日<input id="gra-day" name="gra-time" value="day" type="radio" checked="checked"></label>
+    <label for="gra-week">周<input id="gra-week" name="gra-time" value="week" type="radio"></label>
+    <label for="gra-month">月<input id="gra-month" name="gra-time" value="month" type="radio"></label>
+    <select id="city-select">
+      <option>北京</option>
+    </select>
+  </fieldset>
+
+  <div class="aqi-chart-wrap">
+    <div id="aqi-chart-title"></div>
+    <div class="aqi-chart">
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+      <div class="aqi"></div>
+    </div>
+  </div>
+
+  <script src="task.js"></script>
+</body>
+</html>
