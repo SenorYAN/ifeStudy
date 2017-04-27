@@ -49,6 +49,7 @@
     buttons.addEventListener('click', (e) =>{
         const target = e.target || e.srcElement; 
         const value = document.getElementById('number-input').value;
+        if(!value) return;
         if(target.nodeName == 'BUTTON'){
             switch(target.id){
                 case 'LEFT-IN':
