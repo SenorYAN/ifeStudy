@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body,html{padding: 0;margin: 0;font-size: 14px;color:#000;}
+  table {border-collapse: collapse;width: 100%;table-layout: fixed;}
+  td,th {border: 1px solid #e1e1e1;padding: 0;height: 20px;line-height: 20px;text-align: center;}
+  .current{color:red;}
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+        <tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+    </thead>
+    <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+</table>
+   <script>
+     function calendar(year, month) {
+        var day;
+        var xq = 0;
+        var nowMonth = new Date().getMonth()+1;
+        var nowYear = new Date().getFullYear();
+        var today = new Date().getDate();
+    
+        switch(month){
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:            
+            day =31;
+            break;
+            case 2:
+            day = year%4 ==0 ?29:28; 
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+            day =30;
+            break;
+        }
+        xq = new Date(month+' 1 '+ year).getDay();
+        var tds = document.querySelectorAll('tbody td');
+        tds.forEach(function(element, i) {
+          if((i-xq)<0 || (i-xq) >=day){
+            element.innerHTML = ''
+          }else{
+            element.innerHTML = i-xq+1;
+          }
+        });
+        if(month == nowMonth && year == nowYear){
+          tds[today+xq-1].className = 'current';
+        }
+    }
+  calendar(2017, 4)
+    
+   </script>
+</body>
+</html>
