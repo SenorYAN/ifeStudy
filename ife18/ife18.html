@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .display-board{
+      display: flex;
+      margin-top: 10px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .item{
+      width: 40px;
+      height: 40px;
+      margin: 10px;
+      color: #fff;
+      font-size: 1.25em;
+      line-height: 40px;
+      text-align: center;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div class="buttons" id="buttons">
+    <input type="text" id="number-input">
+    <button id="LEFT-IN">左添加</button>
+    <button id="RIGHT-IN">右添加</button>
+    <button id="LEFT-OUT">左侧出</button>
+    <button id="RIGHT-OUT">右侧出</button>
+  </div>
+  <div class="display-board" id="display-board">
+    <div class="item" id="1">1</div>
+    <div class="item" id="2">2</div>
+    <div class="item" id="3">3</div>
+    <div class="item" id="4">4</div>
+  </div>
+</body>
+
+<script>
+    let data = [1, 2, 3, 4];  
+    const buttons = document.getElementById('buttons');
+    const displayBoard = document.getElementById('display-board');
+
+    // 给按钮组添加事件
+    buttons.addEventListener('click', (e) =>{
+        const target = e.target || e.srcElement; 
+        const value = document.getElementById('number-input').value;
+        if(target.nodeName == 'BUTTON'){
+            switch(target.id){
+                case 'LEFT-IN':
+                    data.unshift(value);
+                break;
+                case 'RIGHT-IN':
+                    data.push(value);
+                break;
+                case 'LEFT-OUT':
+                    data.shift();
+                break;
+                case 'RIGHT-OUT':
+                    data.pop();
+                break;
+                default:
+                break;
+            }
+            renderData();
+        }
+    })
+
+    //给每个元素绑定事件
+    displayBoard.addEventListener('click', function(e){
+      const target = e.target || e.srcElement; 
+      if(target.className == 'item'){
+        const id = target.id;
+        data.splice(id, 1);
+        renderData();
+      }
+    })
+
+    
+    //渲染方块
+    const renderData = () =>{
+      document.getElementById('display-board').innerHTML = data.map((item, i) => {
+          return `<div class="item" id=${i}>${item}</div>`
+      }).join('');
+    }
+</script>
+</html>
