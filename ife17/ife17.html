@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IFE JavaScript Task 01</title>
+    <link rel="stylesheet" href="animate.css">
   </head>
   <style>
     html, body{
@@ -46,11 +47,27 @@
     }
     .aqi{
       width: 10px;
-      height: 100px;
+      height: 0;
       transition: height .5s;
       margin-right: 5px;
       background-color: grey;
+      cursor: pointer;
+      animation: aqi .5s ease-in;
     }
+    @keyframes aqi {
+      from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+      }
+
+      to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+      }
+    }
+}
   </style>
 <body>
   <fieldset id="form-gra-time">
