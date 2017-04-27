@@ -55,11 +55,10 @@ var pageState = {
  * 渲染图表
  */
 function renderChart() {
-  console.log(pageState, chartData);
   const aqiChartTiltle = document.getElementById('aqi-chart-title');
   const aqiChart = document.getElementById('aqi-chart');
-  aqiChartTiltle.innerText = `${pageState.nowSelectCity}市空气质量指数图`;
-  const renderData = chartData[pageState.nowSelectCity][pageState.nowGraTime];
+  aqiChartTiltle.innerText = `${chartData[+(pageState.nowSelectCity)]['city']}市空气质量指数图`;
+  let renderData = chartData[+(pageState.nowSelectCity)]['data'][pageState.nowGraTime];
   const renderDom = renderData.map((item) =>{
      return `<div class="aqi" title=${item.time} style="height: ${item.aqi}px"></div>`
   });
@@ -92,7 +91,6 @@ function citySelectChange(e) {
   const cityName = citySelect.value;
   // 设置对应数据
   pageState.nowSelectCity = cityName;
-  chartData = aqiSourceData[cityName];
   // 调用图表渲染函数
   renderChart();
 }
@@ -116,11 +114,11 @@ function initGraTimeForm() {
 function initCitySelector() {
   // 读取aqiSourceData中的城市，然后设置id为city-select的下拉列表中的选项
   const citySelect = document.getElementById('city-select');
-  const citySource = Object.keys(aqiSourceData).map((item) => {
-        return `<option>${item}</option>` ;
+  const citySource = Object.keys(aqiSourceData).map((item, i) => {
+        return `<option value=${i}>${item}</option>` ;
   })
   citySelect.innerHTML = citySource.join('');
-  pageState.nowSelectCity = citySource[0].match(/\<option\>(\S*)\<\/option\>/)[1];
+  pageState.nowSelectCity = "0";
   // 给select设置事件，当选项发生变化时调用函数citySelectChange
   citySelect.addEventListener('change', citySelectChange);
 }
@@ -154,14 +152,20 @@ function initAqiChartData() {
       sum1 += e.aqi;
       //处理每周
       if(i%7 == 6){
-        obj.week.push(Math.round(sum/7));
+        obj.week.push({
+          time: `第${Math.floor(i/7+1)}周`,
+          aqi: Math.round(sum/7)
+        });
         sum = 0;
       }
       //处理每月
       if(now > day && i < obj.day.length-1){
         day = now;
       }else{
-        obj.month.push(Math.round(sum1/day));
+        obj.month.push({
+          time: `第${obj.month.length+1}月`, 
+          aqi: Math.round(sum1/day)
+        });
         day = 0;
         sum1 = 0;
       }
@@ -171,9 +175,7 @@ function initAqiChartData() {
       city: item,
       data: obj
     }
-  }).reduce((a, b) => {
-    return a[b['city']] = b['data'], a;
-  }, {});
+  });
 
   renderChart();
 }
