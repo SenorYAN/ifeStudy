@@ -10,17 +10,43 @@
       display: flex;
       margin-top: 10px;
       justify-content: flex-start;
+      align-items: flex-end;
       flex-wrap: wrap;
+      min-height: 40px;
+      box-shadow: 0 0 2px 2px #ddd;
     }
     .item{
       width: 40px;
       height: 40px;
-      margin: 10px;
-      color: #fff;
+      margin: 50px 10px 10px 10px;
+      color: #222;
       font-size: 1.25em;
       line-height: 40px;
       text-align: center;
       background-color: pink;
+      animation: move .5s;
+      position: relative;
+    }
+    .item span {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+    }
+    @keyframes move{
+      from {
+        opacity: 0;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+      }
+
+      to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+      }
     }
   </style>
 </head>
@@ -31,17 +57,14 @@
     <button id="RIGHT-IN">右添加</button>
     <button id="LEFT-OUT">左侧出</button>
     <button id="RIGHT-OUT">右侧出</button>
+    <button id="BUBBLE">冒泡排序</button>
   </div>
   <div class="display-board" id="display-board">
-    <div class="item" id="1">1</div>
-    <div class="item" id="2">2</div>
-    <div class="item" id="3">3</div>
-    <div class="item" id="4">4</div>
   </div>
 </body>
 
 <script>
-    let data = [1, 2, 3, 4];  
+    let data = [22,36,12,47,38,46,72,15];  
     const buttons = document.getElementById('buttons');
     const displayBoard = document.getElementById('display-board');
 
@@ -49,13 +72,14 @@
     buttons.addEventListener('click', (e) =>{
         const target = e.target || e.srcElement; 
         const value = document.getElementById('number-input').value;
-        if(!value) return;
         if(target.nodeName == 'BUTTON'){
             switch(target.id){
                 case 'LEFT-IN':
+                    if(!value) return;
                     data.unshift(value);
                 break;
                 case 'RIGHT-IN':
+                    if(!value) return;
                     data.push(value);
                 break;
                 case 'LEFT-OUT':
@@ -64,10 +88,14 @@
                 case 'RIGHT-OUT':
                     data.pop();
                 break;
+                case 'BUBBLE':
+                    bubbleSort();
+                break;
                 default:
                 break;
             }
             renderData();
+            document.getElementById('number-input').value = '';
         }
     })
 
@@ -85,8 +113,35 @@
     //渲染方块
     const renderData = () =>{
       document.getElementById('display-board').innerHTML = data.map((item, i) => {
-          return `<div class="item" id=${i}>${item}</div>`
+          return `<div class="item" id=${i} style="height: ${item}px; line-height: ${item}px"><span>${item}</span></div>`
       }).join('');
     }
+
+    //BubbleSort
+    const bubbleSort = function(){
+      const items = document.querySelectorAll('.item');
+      const foo = (a, b) =>{
+          if(a > b){
+              [a, b] = [b, a]
+          }
+          return [a, b]
+      }
+      for(let i=0, length = data.length; i<length; i++){
+        for(let j=0; j<length-i-1; j++){
+          const res= foo(data[j], data[j+1]);
+          [data[j], data[j+1]] = res;
+        }
+      }
+    }
+    
+ //var gen = bubbleSort();
+
+//  setInterval(function(){
+//     gen.next();
+//     renderData();
+//  },2000)
+
+
+    renderData();
 </script>
 </html>
