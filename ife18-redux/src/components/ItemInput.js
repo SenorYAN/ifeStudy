@@ -4,12 +4,13 @@ import {render} from 'react-dom';
 export class ItemInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    }
   }
 
   handleClick(e) {
     const ndInput = this.refs.numberInput;
+    if(ndInput.value == ''){
+      return;
+    }
     switch(e.target.id){
       case 'LEFT_IN':
           this.props.onLeftIn(ndInput.value);

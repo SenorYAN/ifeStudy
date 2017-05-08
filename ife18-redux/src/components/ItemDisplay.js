@@ -1,8 +1,19 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 
-export class ItemDisplay extends Component {
-  render() {
-    return <div className="display-board" id="display-board"></div>
-  }
+const  ItemDisplay = (props) => {
+  return (
+      <div className="display-board" id="display-board">
+        {
+            props.items.map((item, i) => {
+                return  (
+                  <div className="item" key={i} id={i} style={{height: `${item}px`,lineHeight: `${item}px`}}><span>{item}</span></div>
+                )
+            })
+        }
+      </div>
+  )
 }
+  
+
+export default ItemDisplay;
