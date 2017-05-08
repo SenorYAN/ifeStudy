@@ -14,10 +14,9 @@ export const leftIn  = (value) => {
     }
 }
 
-export const leftOut  = (value) => {
+export const leftOut  = () => {
     return {
-      type: LEFT_OUT,
-      value
+      type: LEFT_OUT
     }
 }
 export const rightIn  = (value) => {
@@ -26,9 +25,8 @@ export const rightIn  = (value) => {
       value
     }
 }
-export const rightOut  = (value) => {
+export const rightOut  = () => {
     return {
-      type: RIGHT_OUT,
-      value
+      type: RIGHT_OUT
     }
 }
