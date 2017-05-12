@@ -6,9 +6,9 @@ import AppContainer from './containers/AppContainer';
 
 import inAndOut from './redux/reducers/mainReducer';
 
-import './styles/style.less'
+import './styles/style.scss'
 
-let store = createStore(inAndOut);
+let store = createStore(inAndOut, {items: ['23', '12', 56, 7]});
 
 render((
     <Provider store = {store}>

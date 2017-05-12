@@ -1,24 +1,25 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
-import {ItemInput} from '../components/ItemInput';
+import ItemInput from '../components/ItemInput';
 import ItemDisplay from '../components/ItemDisplay';
 
-import {leftIn, leftOut, rightIn, rightOut} from '../redux/actions/mainActions';
+import {leftIn, leftOut, rightIn, rightOut, bubbleSort} from '../redux/actions/mainActions';
 
 class AppContainer extends Component{
   componentWillReceiveProps(newProps) {
       console.log(newProps.items)
   }
   render() {
-    const {dispatch, items} = this.props;
+    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onBubbleSort} = this.props;
     return (
       <div>
           <ItemInput 
-              onLeftIn = {value => dispatch(leftIn(value))}
-              onRightIn = {value => dispatch(rightIn(value))}
-              onLeftOut = {value => dispatch(leftOut())}
-              onRightOut = {value => dispatch(rightOut())}
+              onLeftIn = {onLeftIn}
+              onRightIn = {onRightIn}
+              onLeftOut = {onLeftOut}
+              onRightOut = {onRightOut}
+              onBubbleSort = {onBubbleSort}
           />
           <ItemDisplay
               items = {items}
@@ -28,10 +29,21 @@ class AppContainer extends Component{
   }
 }
 
-const selectItems = (state) => {
+const mapStateToProps = state => {
   return {
     items : state.items
   }
 }
 
-export default connect(selectItems)(AppContainer)
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLeftIn: value => dispatch(leftIn(value)),
+    onRightIn: value => dispatch(rightIn(value)),
+    onLeftOut: () => dispatch(leftOut()),
+    onRightOut: () => dispatch(rightOut()),
+    onBubbleSort: (i, j) => dispatch(bubbleSort(i, j))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)

@@ -5,6 +5,10 @@ export const RIGHT_IN = 'RIGHT_IN';
 export const LEFT_OUT = 'LEFT_OUT';
 export const RIGHT_OUT = 'RIGHT_OUT';
 
+//排序
+export const BUBBLE_SORT = 'BUBBLE_SORT';
+
+
 
 // action创建函数
 export const leftIn  = (value) => {
@@ -28,5 +32,14 @@ export const rightIn  = (value) => {
 export const rightOut  = () => {
     return {
       type: RIGHT_OUT
+    }
+}
+
+//action创建
+export const bubbleSort  = (i, j) => {
+    return {
+      type: BUBBLE_SORT,
+      front: i,
+      end: j
     }
 }
