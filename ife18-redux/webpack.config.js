@@ -32,11 +32,11 @@ module.exports = {
           loader: 'babel-loader'
       },
       {
-          test: /\.less$/i,
+          test: /\.scss$/i,
           use: [
             "style-loader",
             "css-loader",
-            "less-loader"
+            "sass-loader"
           ]
       },
     ]
