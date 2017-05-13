@@ -5,6 +5,9 @@ export const RIGHT_IN = 'RIGHT_IN';
 export const LEFT_OUT = 'LEFT_OUT';
 export const RIGHT_OUT = 'RIGHT_OUT';
 
+//点击清除
+export const CLICK_OUT = 'CLICK_OUT';
+
 //排序
 export const BUBBLE_SORT = 'BUBBLE_SORT';
 
@@ -32,6 +35,12 @@ export const rightIn  = (value) => {
 export const rightOut  = () => {
     return {
       type: RIGHT_OUT
+    }
+}
+export const clickOut = (index) => {
+    return {
+      type: CLICK_OUT,
+      index
     }
 }
 

@@ -4,14 +4,11 @@ import {connect} from 'react-redux';
 import ItemInput from '../components/ItemInput';
 import ItemDisplay from '../components/ItemDisplay';
 
-import {leftIn, leftOut, rightIn, rightOut, bubbleSort} from '../redux/actions/mainActions';
+import {leftIn, leftOut, rightIn, rightOut, clickOut, bubbleSort} from '../redux/actions/mainActions';
 
 class AppContainer extends Component{
-  componentWillReceiveProps(newProps) {
-      console.log(newProps.items)
-  }
   render() {
-    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onBubbleSort} = this.props;
+    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onClickOut, onBubbleSort} = this.props;
     return (
       <div>
           <ItemInput 
@@ -23,6 +20,7 @@ class AppContainer extends Component{
           />
           <ItemDisplay
               items = {items}
+              onClickOut = {onClickOut}
           />
       </div>
     )  
@@ -42,6 +40,7 @@ const mapDispatchToProps = dispatch => {
     onRightIn: value => dispatch(rightIn(value)),
     onLeftOut: () => dispatch(leftOut()),
     onRightOut: () => dispatch(rightOut()),
+    onClickOut: index => dispatch(clickOut(index)),
     onBubbleSort: (i, j) => dispatch(bubbleSort(i, j))
   }
 }

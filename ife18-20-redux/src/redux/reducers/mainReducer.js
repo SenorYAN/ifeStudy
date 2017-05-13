@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { LEFT_IN, RIGHT_IN, LEFT_OUT, RIGHT_OUT, BUBBLE_SORT} from '../actions/mainActions'
+import { LEFT_IN, RIGHT_IN, LEFT_OUT, RIGHT_OUT, CLICK_OUT, BUBBLE_SORT} from '../actions/mainActions'
 
 const bubbleSort = (state, i, j) => {
     const queue = state.slice();
@@ -9,6 +9,12 @@ const bubbleSort = (state, i, j) => {
         document.querySelectorAll(".display-board .item")[j].style.backgroundColor = 'pink';
     },1000)
     return queue;        
+}
+
+const clickOut = (state, index) => {
+    const queue = state.slice();
+    queue.splice(index, 1);
+    return queue;
 }
 
 const items = (state = [], action) =>{
@@ -25,6 +31,8 @@ const items = (state = [], action) =>{
         let RightOutState = state.slice();
         RightOutState.pop();
         return RightOutState;
+      case CLICK_OUT:
+        return clickOut(state, action.index);
       case BUBBLE_SORT:
         return bubbleSort(state, action.front, action.end);
       default:

@@ -7,7 +7,7 @@ const  ItemDisplay = (props) => {
         {
             props.items.map((item, i) => {
                 return  (
-                  <div className="item" key={i} id={i} style={{height: `${item}px`,lineHeight: `${item}px`}}><span>{item}</span></div>
+                  <div className="item" key={i} id={i} style={{height: `${item}px`,lineHeight: `${item}px`}}onClick={() => {props.onClickOut(i)}}><span>{item}</span></div>
                 )
             })
         }
