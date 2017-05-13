@@ -36,7 +36,7 @@ class ItemInput extends Component {
 
   handleClick(e) {
     const ndInput = this.refs.numberInput;
-    if(ndInput.value == '' && e.target.id != BUBBLE_SORT){
+    if(ndInput.value == '' && (e.target.id == LEFT_IN || e.target.id == RIGHT_IN)){
       return;
     }
     const {onLeftIn, onLeftOut, onRightIn, onRightOut} = this.props;

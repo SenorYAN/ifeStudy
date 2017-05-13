@@ -10,6 +10,8 @@ import './styles/style.scss'
 
 let store = createStore(inAndOut, {items: ['23', '12', 56, 7]});
 
+document.documentElement.style.fontSize = document.documentElement.clientWidth / 6.4 + 'px';
+
 render((
     <Provider store = {store}>
         <AppContainer />
