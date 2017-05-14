@@ -1,3 +1,5 @@
+  $itemHeight : .40rem;
+
   html{
     margin: 0;
     padding: 0;
@@ -12,31 +14,30 @@
   .display-board{
       display: flex;
       margin-top: .10rem;
+      padding: 0 .10rem;
+      flex-direction: column;
       justify-content: flex-start;
-      align-items: flex-end;
       flex-wrap: wrap;
-      min-height: .40rem;
+      min-height: $itemHeight;
       box-shadow: 0 0 2px 2px #ddd;
+      & > li{
+          list-style: none;
+      }
   }
-  .item{
-    width: .40rem;
-    height: .40rem;
-    margin: .50rem .10rem .10rem .10rem;
+  li.item{
+    height: $itemHeight;
+    margin: .10rem 0;
     color: #222;
-    font-size: .20em;
-    line-height: .40rem;
-    text-align: center;
+    font-size: .16em;
+    line-height: $itemHeight;
     background-color: pink;
     animation: move .5s;
-    position: relative;
-  }
-  .item span {
-    position: absolute;
-    top: -0.40rem;
-    right: 0;
-    width: 100%;
-    height: .40rem;
-    line-height: .40rem;
+    span{
+      padding: 0 .10rem;
+      width: 100%;
+      height: $itemHeight;
+      line-height: $itemHeight;
+    }
   }
   @keyframes move{
     from {

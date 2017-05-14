@@ -8,8 +8,6 @@ export const RIGHT_OUT = 'RIGHT_OUT';
 //点击清除
 export const CLICK_OUT = 'CLICK_OUT';
 
-//排序
-export const BUBBLE_SORT = 'BUBBLE_SORT';
 
 
 
@@ -41,14 +39,5 @@ export const clickOut = (index) => {
     return {
       type: CLICK_OUT,
       index
-    }
-}
-
-//action创建
-export const bubbleSort  = (i, j) => {
-    return {
-      type: BUBBLE_SORT,
-      front: i,
-      end: j
     }
 }

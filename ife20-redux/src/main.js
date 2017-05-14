@@ -8,7 +8,7 @@ import inAndOut from './redux/reducers/mainReducer';
 
 import './styles/style.scss'
 
-let store = createStore(inAndOut, {items: ['23', '12', 56, 7]});
+let store = createStore(inAndOut, {items: ['todo1', 'todo2']});
 let next = store.dispatch;
 store.dispatch = action => {
     console.log('dispatching', action);

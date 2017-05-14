@@ -3,15 +3,15 @@ import {render} from 'react-dom';
 
 const  ItemDisplay = (props) => {
   return (
-      <div className="display-board" id="display-board">
+      <ul className="display-board" id="display-board">
         {
             props.items.map((item, i) => {
                 return  (
-                  <div className="item" key={i} id={i} style={{height: `${item}px`,lineHeight: `${item}px`}}onClick={() => {props.onClickOut(i)}}><span>{item}</span></div>
+                  <li className="item" key={i} id={i} onClick={() => {props.onClickOut(i)}}><span>{item}</span></li>
                 )
             })
         }
-      </div>
+      </ul>
   )
 }
   
