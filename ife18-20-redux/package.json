@@ -1,7 +1,7 @@
 {
-  "name": "ife18-20-mobx",
+  "name": "ife18-20-redux",
   "version": "1.0.0",
-  "description": "ife18-20 + react + mobx",
+  "description": "ife18-20 + react + redux",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
