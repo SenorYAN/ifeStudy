@@ -67,7 +67,7 @@ class ItemInput extends Component {
   render() {
     return (
       <div className="buttons" id="buttons" onClick={e => this.handleClick(e)}>
-        <input type="text" id="number-input" ref="numberInput"/>
+        <textarea id="number-input" ref="numberInput"/>
         <button id="LEFT_IN">左添加</button>
         <button id="RIGHT_IN">右添加</button>
         <button id="LEFT_OUT">左侧出</button>

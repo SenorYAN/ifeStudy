@@ -5,8 +5,9 @@
   .buttons{
     font-size: .16rem;
   }
-  input{
-    box-shadow: 0 0 5px rgba(23, 136, 267, 0.8)
+  input, textarea{
+    width: 100%;
+    box-shadow: 0 0 5px rgba(23, 136, 267, 0.8);
   }
   .display-board{
       display: flex;
