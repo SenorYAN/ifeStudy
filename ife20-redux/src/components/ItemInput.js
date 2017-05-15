@@ -24,16 +24,20 @@ class ItemInput extends Component {
           ndInput.value = '';
           break;
       case LEFT_OUT:
-          onToogleClass(0);
-          setTimeout(() => {
-            onLeftOut();
-          },500);
+          if(sum>0){
+            onToogleClass(0);
+            setTimeout(() => {
+              onLeftOut();
+            },500);
+          }
           break;
       case RIGHT_OUT:
-          onToogleClass(sum-1);
-          setTimeout(() => {
-            onRightOut();
-          },500);
+          if(sum>0){
+            onToogleClass(sum-1);
+            setTimeout(() => {
+              onRightOut();
+            },500);
+          }
           break;
       default:
           break;
