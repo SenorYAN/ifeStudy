@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import ItemInput from '../components/ItemInput';
+import ItemSearch from '../components/ItemSearch';
 import ItemDisplay from '../components/ItemDisplay';
 
-import {leftIn, leftOut, rightIn, rightOut, clickOut, toogleClass} from '../redux/actions/mainActions';
+import {leftIn, leftOut, rightIn, rightOut, clickOut, toogleClass, search} from '../redux/actions/mainActions';
 
 class AppContainer extends Component{
   render() {
-    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onClickOut, onToogleClass} = this.props;
+    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onClickOut, onToogleClass, onSearch} = this.props;
     return (
       <div>
           <ItemInput 
@@ -18,6 +19,9 @@ class AppContainer extends Component{
               onLeftOut = {onLeftOut}
               onRightOut = {onRightOut}
               onToogleClass = {onToogleClass}
+          />
+          <ItemSearch 
+              onSearch = {onSearch}
           />
           <ItemDisplay
               items = {items}
@@ -42,7 +46,8 @@ const mapDispatchToProps = dispatch => {
     onLeftOut: () => dispatch(leftOut()),
     onRightOut: () => dispatch(rightOut()),
     onClickOut: index => dispatch(clickOut(index)),
-    onToogleClass: index => dispatch(toogleClass(index))
+    onToogleClass: index => dispatch(toogleClass(index)),
+    onSearch: keyword => dispatch(search(keyword))
   }
 }
 

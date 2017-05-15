@@ -4,23 +4,33 @@
     margin: 0;
     padding: 0;
   }
+  .buttons span, .item-search span{
+    border: 1px solid #666;
+    padding: .04rem;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover, &:clicked{
+      color: #2537f5;
+    }
+  }
   .buttons{
     font-size: .12rem;
-    span{
-      border: 1px solid #666;
-      padding: .04rem;
-      display: inline-block;
-      margin: 5px;
-      border-radius: 4px;
-      cursor: pointer;
-      &:hover, &:clicked{
-        color: #2537f5;
-      }
-    }
   }
   input, textarea{
     width: 100%;
     box-shadow: 0 0 5px rgba(23, 136, 267, 0.8);
+  }
+  .item-search{
+    font-size: .12rem;
+    input {
+      width: 80%;
+    }
+    span {
+      letter-spacing: .5em;
+      padding: .04rem 0 .04rem .5em;
+    }
   }
   .display-board{
       display: flex;
@@ -47,6 +57,10 @@
       width: 100%;
       height: $itemHeight;
       line-height: $itemHeight;
+      .highlight{
+        padding: 0;
+        background: yellow;
+      }
     }
     &.finished{
       background-color: #c0ffd9;

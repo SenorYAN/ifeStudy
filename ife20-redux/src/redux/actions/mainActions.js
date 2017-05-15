@@ -11,6 +11,9 @@ export const CLICK_OUT = 'CLICK_OUT';
 //动画样式
 export const TOOGLE_CLASS = 'TOOGLE_CLASS';
 
+//点击查询
+export const SEARCH = 'SEARCH';
+
 
 // action创建函数
 export const leftIn  = (value) => {
@@ -50,5 +53,12 @@ export const toogleClass = (index) => {
     return {
       type: TOOGLE_CLASS,
       index
+    }
+}
+
+export const search = (keyword) => {
+    return {
+      type: SEARCH,
+      keyword
     }
 }

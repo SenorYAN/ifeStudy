@@ -30,8 +30,11 @@ class ItemLi extends Component {
   }
   render() {
     const props = this.props;
+    const showItem = value => {
+      return value.replace(/≈/g,`<span class="highlight">`).replace(/ø/g,`</span>`);
+    }
     return (
-        <li className={this.state.className} onClick={() => {props.onClickOut(props.index)}}><span>{props.item.value}</span></li>
+        <li className={this.state.className} onClick={() => {props.onClickOut(props.index)}}><span dangerouslySetInnerHTML={{__html : showItem(props.item.value)}}></span></li>
     )
   }
 }
