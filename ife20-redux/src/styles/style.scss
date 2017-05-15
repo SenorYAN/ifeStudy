@@ -5,7 +5,18 @@
     padding: 0;
   }
   .buttons{
-    font-size: .16rem;
+    font-size: .12rem;
+    span{
+      border: 1px solid #666;
+      padding: .04rem;
+      display: inline-block;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover, &:clicked{
+        color: #2537f5;
+      }
+    }
   }
   input, textarea{
     width: 100%;
@@ -20,7 +31,7 @@
       flex-wrap: wrap;
       min-height: $itemHeight;
       box-shadow: 0 0 2px 2px #ddd;
-      & > li{
+      li{
           list-style: none;
       }
   }
@@ -31,15 +42,24 @@
     font-size: .16em;
     line-height: $itemHeight;
     background-color: pink;
-    animation: move .5s;
     span{
       padding: 0 .10rem;
       width: 100%;
       height: $itemHeight;
       line-height: $itemHeight;
     }
+    &.finished{
+      background-color: #c0ffd9;
+      text-decoration: line-through;
+    }
+    &.fadeInRight{
+      animation: fadeInRight .5s;
+    }
+    &.fadeOutLeft{
+      animation: fadeOutLeft .5s;
+    }
   }
-  @keyframes move{
+  @keyframes fadeInRight{
     from {
       opacity: 0;
       -webkit-transform: translate3d(100%, 0, 0);
@@ -52,3 +72,15 @@
       transform: none;
     }
   }
+
+  @keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}

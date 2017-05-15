@@ -1,28 +1,35 @@
 import { combineReducers } from 'redux'
-import { LEFT_IN, RIGHT_IN, LEFT_OUT, RIGHT_OUT, CLICK_OUT, BUBBLE_SORT} from '../actions/mainActions'
+import { LEFT_IN, RIGHT_IN, LEFT_OUT, RIGHT_OUT, CLICK_OUT, TOOGLE_CLASS} from '../actions/mainActions'
 
-const bubbleSort = (state, i, j) => {
-    const queue = state.slice();
-    document.querySelectorAll(".display-board .item")[j].style.backgroundColor = 'green';
-    [queue[i], queue[j]] = [queue[j], queue[i]];
-    setTimeout(() => {
-        document.querySelectorAll(".display-board .item")[j].style.backgroundColor = 'pink';
-    },1000)
-    return queue;        
-}
 
 const clickOut = (state, index) => {
     const queue = state.slice();
-    queue.splice(index, 1);
+    queue[index].finished = !(queue[index].finished);
+    return queue;
+}
+
+const toogleClass = (state, index) => {
+    const queue = state.slice();
+    queue[index].ready = !(queue[index].ready);
     return queue;
 }
 
 const items = (state = [], action) =>{
+  const {value, finished} = action;
+  const time = new Date().getTime();
     switch(action.type){
       case LEFT_IN:
-        return (action.value > 0 && action.value < 100) ? [action.value, ...state] : state;
+        return [{
+          value,
+          finished,
+          time
+        }, ...state];
       case RIGHT_IN:
-        return (action.value > 0 && action.value < 100) ? [...state, action.value] : state;
+        return [...state, {
+          value,
+          finished,
+          time
+        }];
       case LEFT_OUT:
         let leftOutState = state.slice();
         leftOutState.shift();
@@ -33,8 +40,8 @@ const items = (state = [], action) =>{
         return RightOutState;
       case CLICK_OUT:
         return clickOut(state, action.index);
-      case BUBBLE_SORT:
-        return bubbleSort(state, action.front, action.end);
+      case TOOGLE_CLASS:
+        return toogleClass(state, action.index);
       default:
         return state;
     }

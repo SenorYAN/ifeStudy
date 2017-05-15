@@ -13,7 +13,7 @@ class ItemInput extends Component {
     if(ndInput.value == '' && (e.target.id == LEFT_IN || e.target.id == RIGHT_IN)){
       return;
     }
-    const {onLeftIn, onLeftOut, onRightIn, onRightOut} = this.props;
+    const {onLeftIn, onLeftOut, onRightIn, onRightOut, onToogleClass, sum} = this.props;
     switch(e.target.id){
       case LEFT_IN:
           onLeftIn(ndInput.value);
@@ -24,10 +24,16 @@ class ItemInput extends Component {
           ndInput.value = '';
           break;
       case LEFT_OUT:
-          onLeftOut();
+          onToogleClass(0);
+          setTimeout(() => {
+            onLeftOut();
+          },500);
           break;
       case RIGHT_OUT:
-          onRightOut();
+          onToogleClass(sum-1);
+          setTimeout(() => {
+            onRightOut();
+          },500);
           break;
       default:
           break;
@@ -39,10 +45,10 @@ class ItemInput extends Component {
     return (
       <div className="buttons" id="buttons" onClick={e => this.handleClick(e)}>
         <textarea id="number-input" ref="numberInput"/>
-        <button id="LEFT_IN">上添加</button>
-        <button id="RIGHT_IN">下添加</button>
-        <button id="LEFT_OUT">上侧出</button>
-        <button id="RIGHT_OUT">下侧出</button>
+        <span id="LEFT_IN">上添加</span>
+        <span id="RIGHT_IN">下添加</span>
+        <span id="LEFT_OUT">上侧出</span>
+        <span id="RIGHT_OUT">下侧出</span>
       </div>
     )
   }

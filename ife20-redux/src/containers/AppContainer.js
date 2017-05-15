@@ -4,19 +4,20 @@ import {connect} from 'react-redux';
 import ItemInput from '../components/ItemInput';
 import ItemDisplay from '../components/ItemDisplay';
 
-import {leftIn, leftOut, rightIn, rightOut, clickOut, bubbleSort} from '../redux/actions/mainActions';
+import {leftIn, leftOut, rightIn, rightOut, clickOut, toogleClass} from '../redux/actions/mainActions';
 
 class AppContainer extends Component{
   render() {
-    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onClickOut, onBubbleSort} = this.props;
+    const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onClickOut, onToogleClass} = this.props;
     return (
       <div>
           <ItemInput 
+              sum = {items.length}
               onLeftIn = {onLeftIn}
               onRightIn = {onRightIn}
               onLeftOut = {onLeftOut}
               onRightOut = {onRightOut}
-              onBubbleSort = {onBubbleSort}
+              onToogleClass = {onToogleClass}
           />
           <ItemDisplay
               items = {items}
@@ -41,7 +42,7 @@ const mapDispatchToProps = dispatch => {
     onLeftOut: () => dispatch(leftOut()),
     onRightOut: () => dispatch(rightOut()),
     onClickOut: index => dispatch(clickOut(index)),
-    onBubbleSort: (i, j) => dispatch(bubbleSort(i, j))
+    onToogleClass: index => dispatch(toogleClass(index))
   }
 }
 
