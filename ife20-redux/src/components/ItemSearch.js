@@ -2,7 +2,13 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {connect} from 'react-redux';
 
-class ItemSearch extends Component {
+const mapStateToProps = (state) =>{
+    return {
+      items: state.items
+    }
+}
+@connect(mapStateToProps)
+export default class ItemSearch extends Component {
   constructor(props) {
     super(props);
   }
@@ -18,11 +24,4 @@ class ItemSearch extends Component {
       </div>
     )
   }
-}
-
-const mapStateToProps = (state) =>{
-    return {
-      items: state.items
-    }
-}
-export default connect(mapStateToProps)(ItemSearch);
+};

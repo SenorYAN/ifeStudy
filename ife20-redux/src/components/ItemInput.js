@@ -3,7 +3,14 @@ import {render} from 'react-dom';
 import {connect} from 'react-redux';
 import {LEFT_IN, RIGHT_IN, LEFT_OUT, RIGHT_OUT} from '../redux/actions/mainActions';
 
-class ItemInput extends Component {
+const mapStateToProps = (state) => {
+  return {
+    items : state.items
+  }
+}
+
+@connect(mapStateToProps)
+export default class ItemInput extends Component {
   constructor(props) {
     super(props);
   }
@@ -56,10 +63,4 @@ class ItemInput extends Component {
       </div>
     )
   }
-} 
-const select = (state) => {
-  return {
-    items : state.items
-  }
-}
-export default connect(select)(ItemInput);
+};

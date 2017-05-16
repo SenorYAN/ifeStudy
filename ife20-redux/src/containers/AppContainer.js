@@ -7,7 +7,27 @@ import ItemDisplay from '../components/ItemDisplay';
 
 import {leftIn, leftOut, rightIn, rightOut, clickOut, toogleClass, search} from '../redux/actions/mainActions';
 
-class AppContainer extends Component{
+const mapStateToProps = state => {
+  return {
+    items : state.items
+  }
+}
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLeftIn: value => dispatch(leftIn(value)),
+    onRightIn: value => dispatch(rightIn(value)),
+    onLeftOut: () => dispatch(leftOut()),
+    onRightOut: () => dispatch(rightOut()),
+    onClickOut: index => dispatch(clickOut(index)),
+    onToogleClass: index => dispatch(toogleClass(index)),
+    onSearch: keyword => dispatch(search(keyword))
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class AppContainer extends Component{
   render() {
     const {dispatch, items, onLeftIn, onRightIn, onLeftOut, onRightOut, onClickOut, onToogleClass, onSearch} = this.props;
     return (
@@ -30,25 +50,4 @@ class AppContainer extends Component{
       </div>
     )  
   }
-}
-
-const mapStateToProps = state => {
-  return {
-    items : state.items
-  }
-}
-
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onLeftIn: value => dispatch(leftIn(value)),
-    onRightIn: value => dispatch(rightIn(value)),
-    onLeftOut: () => dispatch(leftOut()),
-    onRightOut: () => dispatch(rightOut()),
-    onClickOut: index => dispatch(clickOut(index)),
-    onToogleClass: index => dispatch(toogleClass(index)),
-    onSearch: keyword => dispatch(search(keyword))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer)
+};
