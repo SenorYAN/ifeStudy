@@ -20,14 +20,19 @@ export default class ItemInput extends Component {
     if(ndInput.value == '' && (e.target.id == LEFT_IN || e.target.id == RIGHT_IN)){
       return;
     }
+    const valArr = ndInput.value.replace(/[\s,，、]/g, 'µ').split('µ').filter(x => x);
     const {onLeftIn, onLeftOut, onRightIn, onRightOut, onToogleClass, sum} = this.props;
     switch(e.target.id){
       case LEFT_IN:
-          onLeftIn(ndInput.value);
+          valArr.forEach((val, index) => {
+              onLeftIn(val);
+          });
           ndInput.value = '';
           break;
       case RIGHT_IN:
-          onRightIn(ndInput.value);
+          valArr.forEach((val, index) => {
+              onRightIn(val);
+          });
           ndInput.value = '';
           break;
       case LEFT_OUT:
