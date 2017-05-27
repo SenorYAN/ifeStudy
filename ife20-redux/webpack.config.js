@@ -8,6 +8,7 @@ var appDirectory = fs.realpathSync(process.cwd());
 
 module.exports = {
   entry: {
+    babelP: "babel-polyfill",
     main: path.resolve(appDirectory, 'src/main.js'),
     vendor: ['react', 'react-dom']
   },

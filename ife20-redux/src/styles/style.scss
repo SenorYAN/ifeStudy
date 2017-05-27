@@ -1,93 +1,112 @@
-  $itemHeight : .40rem;
+$vm_base: 375; 
+@function vw($px) {
+    @return ($px / 375) * 100vw;
+}
 
+html{
+  margin: 0;
+  padding: 0;
+}
+@media (max-width : 320px){
   html{
-    margin: 0;
-    padding: 0;
+    font-size: 64px;
   }
-  .buttons span, .item-search span{
-    border: 1px solid #666;
-    padding: .04rem;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover, &:clicked{
-      color: #2537f5;
+}
+
+@media (min-width: 321px) and (max-width : 375px){
+  html{
+    font-size: 75px;
+  }
+}
+
+@media (min-width : 376px){
+  html{
+    font-size: 124.8px;
+  }
+}
+.buttons span, .item-search span{
+  border: 1px solid #666;
+  padding: vw(4);
+  display: inline-block;
+  margin: vw(5);
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover, &:clicked{
+    color: #2537f5;
+  }
+}
+.buttons{
+  font-size: vw(12);
+}
+input, textarea{
+  width: 100%;
+  box-shadow: 0 0 5px rgba(23, 136, 267, 0.8);
+}
+.item-search{
+  font-size: vw(12);
+  input {
+    width: 80%;
+  }
+  span {
+    letter-spacing: .5em;
+    padding: vw(4) 0 vw(4) .5em;
+  }
+}
+.display-board{
+    display: flex;
+    margin-top: vw(10);
+    padding: 0 vw(10);
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    min-height: vw(40);
+    box-shadow: 0 0 2px 2px #ddd;
+    li{
+        list-style: none;
     }
-  }
-  .buttons{
-    font-size: .12rem;
-  }
-  input, textarea{
+}
+li.item{
+  height: vw(40);
+  margin: vw(10) 0;
+  color: #222;
+  font-size: vw(12);
+  line-height: vw(40);
+  span{
+    padding: 0 .10rem;
     width: 100%;
-    box-shadow: 0 0 5px rgba(23, 136, 267, 0.8);
-  }
-  .item-search{
-    font-size: .12rem;
-    input {
-      width: 80%;
-    }
-    span {
-      letter-spacing: .5em;
-      padding: .04rem 0 .04rem .5em;
+    height: vw(40);
+    line-height: vw(40);
+    .highlight{
+      padding: 0;
+      background: yellow;
     }
   }
-  .display-board{
-      display: flex;
-      margin-top: .10rem;
-      padding: 0 .10rem;
-      flex-direction: column;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      min-height: $itemHeight;
-      box-shadow: 0 0 2px 2px #ddd;
-      li{
-          list-style: none;
-      }
+  &.finished{
+    background-color: #c0ffd9;
+    text-decoration: line-through;
   }
-  li.item{
-    height: $itemHeight;
-    margin: .10rem 0;
-    color: #222;
-    font-size: .16em;
-    line-height: $itemHeight;
-    background-color: pink;
-    span{
-      padding: 0 .10rem;
-      width: 100%;
-      height: $itemHeight;
-      line-height: $itemHeight;
-      .highlight{
-        padding: 0;
-        background: yellow;
-      }
-    }
-    &.finished{
-      background-color: #c0ffd9;
-      text-decoration: line-through;
-    }
-    &.fadeInRight{
-      animation: fadeInRight .5s;
-    }
-    &.fadeOutLeft{
-      animation: fadeOutLeft .5s;
-    }
+  &.fadeInRight{
+    animation: fadeInRight .5s;
   }
-  @keyframes fadeInRight{
-    from {
-      opacity: 0;
-      -webkit-transform: translate3d(100%, 0, 0);
-      transform: translate3d(100%, 0, 0);
-    }
-
-    to {
-      opacity: 1;
-      -webkit-transform: none;
-      transform: none;
-    }
+  &.fadeOutLeft{
+    animation: fadeOutLeft .5s;
+  }
+}
+@keyframes fadeInRight{
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
   }
 
-  @keyframes fadeOutLeft {
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeOutLeft {
   from {
     opacity: 1;
   }
