@@ -34,12 +34,7 @@ let res = [];
 const flagArr = Array.from({length: data.length}).map((item) => false);
 
 const out = (arr) => {
-    let t = [];
-    arr.forEach((item, index) => {
-        if (flagArr[index]) {
-            t.push(item)
-        }
-    })
+    let t = arr.slice().filter((item, index) => flagArr[index]);
     t.length && res.push(t);
 }
 

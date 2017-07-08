@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .wrapper {
+            height: 200px;
+            display: flex;
+            border: 1px solid #aaa;
+        }
+
+        .item {
+            flex: 1;
+            display: flex;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #aaa;
+        }
+
+        .active {
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">1
+        <div class="item">2
+            <div class="item">4
+                <div class="item">8</div>
+                <div class="item">9</div>
+            </div>
+            <div class="item">5
+                <div class="item">10</div>
+                <div class="item">11</div>
+            </div>
+        </div>
+        <div class="item">3
+            <div class="item">6
+                <div class="item">12</div>
+                <div class="item">13</div>
+            </div>
+            <div class="item">7
+                <div class="item">14</div>
+                <div class="item">15</div>
+            </div>
+        </div>
+    </div>
+
+    <button id="start">先序</button>
+    <button id="middle">中序</button>
+    <button id="end">后序</button>
+    
+    <script>
+        document.getElementsByTagName('body')[0].addEventListener('click',(e)=>{
+            switch(e.target.id){
+                case 'start':
+                    start();
+                    break;
+                case 'middle':
+                    middle();
+                    break;
+                case 'end':
+                    end();
+                    break;
+                default:
+                    break;
+            }
+        })
+
+        const show = (divs) => {
+            divs.forEach((div, i) => {
+                ((index) => {
+                    setTimeout(() => {
+                        if(index>0){ divs[index-1].classList.remove('active') }
+                        div.classList.add('active');
+                        if(index==(divs.length-1)){
+                            setTimeout(() => {div.classList.remove('active')},500)
+                        }
+                    }, 500 * index)
+                })(i)
+            })
+        }
+
+        const start = () => {
+            const divs = [...document.getElementsByTagName('div')];
+            show(divs);
+        }
+
+        const middle = () => {
+            let divs = [];
+
+            const displayActive = (e) => {
+                divs.push(e);
+            }
+
+            const find = (e) => {
+                if(e.firstElementChild){
+                    find(e.firstElementChild);
+                }
+                displayActive(e);
+                if(e.lastElementChild){
+                    find(e.lastElementChild);
+                }
+            }
+
+            const task = new Promise((res, rej) =>{
+                    find(document.getElementsByClassName('wrapper')[0]);
+                    res(divs);
+                }
+            )
+
+            task.then((data) => show(data))
+        }
+
+        const end = () => {
+            let divs = [];
+
+            const displayActive = (e) => {
+                divs.push(e);
+            }
+
+            const find = (e) => {
+                if(e.firstElementChild){
+                    find(e.firstElementChild);
+                }
+                if(e.lastElementChild){
+                    find(e.lastElementChild);
+                }
+                displayActive(e);
+            }
+
+            const task = new Promise((res, rej) =>{
+                    find(document.getElementsByClassName('wrapper')[0]);
+                    res(divs);
+                }
+            )
+
+            task.then((data) => show(data))
+        }
+ 
+    </script>
+</body>
+</html>
