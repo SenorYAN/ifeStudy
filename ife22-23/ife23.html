@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .wrapper {
+            height: 200px;
+            display: flex;
+            border: 1px solid #aaa;
+        }
+
+        .item {
+            flex: 1;
+            display: flex;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #aaa;
+        }
+
+        .active {
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper 1">1
+        <div class="item 2">2
+            <div class="item 4">4
+                <div class="item 9">9</div>
+                <div class="item 10">10</div>
+                <div class="item 11">11</div>
+            </div>
+            <div class="item 5">5
+                <div class="item 12">12</div>
+                <div class="item 13">13</div>
+            </div>
+            <div class="item 6">6
+                <div class="item 14">14</div>
+            </div>
+        </div>
+        <div class="item 3">3
+            <div class="item 7">7
+                <div class="item 15">15</div>
+                <div class="item 16">16</div>
+            </div>
+            <div class="item 8">8
+                <div class="item 17">17</div>
+                <div class="item 18">18</div>
+            </div>
+        </div>
+    </div>
+
+    <button id="start">先序</button>
+    <button id="end">后序</button>
+
+    <input type="text" id="keyword">
+    <button id="startSearch">先序搜寻</button>
+    <button id="endSearch">后序搜寻</button>
+    
+    <script>
+        const START = Symbol('start');
+        const END = Symbol('end');
+        const wrapper = document.getElementsByClassName('wrapper')[0];
+        let divs = [],keyword;
+
+
+        const displayActive = (e) => {
+            if(e.classList.contains('item') || e.classList.contains('wrapper')){
+                divs.push(e);
+            }
+        }
+
+        document.getElementsByTagName('body')[0].addEventListener('click',(e)=>{
+            divs.length = 0;
+            keyword = document.getElementById('keyword').value;
+            switch(e.target.id){
+                case 'start':
+                    start();
+                    break;
+                case 'end':
+                    find(wrapper, END);
+                    break;
+                default:
+                    break;
+            }
+            show(divs);
+        })
+
+        const showTask = (divs) => {
+            console.log(divs)
+            const task = new Promise((res, rej) =>{
+                    find(document.getElementsByClassName('wrapper')[0]);
+                    res(divs);
+                }
+            )
+
+            task.then((data) => show(data))
+        } 
+
+        const find = (e, flag) => {
+            switch(flag){
+                case END:
+                    if(e.firstElementChild){
+                        find(e.firstElementChild, flag);
+                    }
+                    displayActive(e);
+                    if(e.nextElementSibling){
+                        find(e.nextElementSibling, flag);
+                    }
+                break;
+                default:
+                break;
+            }
+        }
+
+        const show = (divs) => {
+            divs.forEach((div, i) => {
+                ((index) => {
+                    setTimeout(() => {
+                        if(index>0){ divs[index-1].classList.remove('active') }
+                        div.classList.add('active');
+                        if(index==(divs.length-1)){
+                            setTimeout(() => {div.classList.remove('active')}, 500)
+                        }
+                    }, 500 * index)
+                })(i)
+            })
+        }
+
+        const start = () => {
+            const divs = [...document.getElementsByTagName('div')];
+            show(divs);
+        }
+ 
+    </script>
+</body>
+</html>
