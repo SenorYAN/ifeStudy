@@ -55,21 +55,69 @@
     <button id="end">后序</button>
     
     <script>
+        const START = Symbol('start');
+        const MIDDLE = Symbol('middle');
+        const END = Symbol('end');
+        const wrapper = document.getElementsByClassName('wrapper')[0];
+        let divs = [];
+
+        const displayActive = (e) => {
+            divs.push(e);
+        }
+
         document.getElementsByTagName('body')[0].addEventListener('click',(e)=>{
+            divs.length = 0;
             switch(e.target.id){
                 case 'start':
                     start();
                     break;
                 case 'middle':
-                    middle();
+                    find(wrapper, MIDDLE);
                     break;
                 case 'end':
-                    end();
+                    find(wrapper, END);
                     break;
                 default:
                     break;
             }
         })
+
+        const showTask = (divs) => {
+            console.log(divs)
+            const task = new Promise((res, rej) =>{
+                    find(document.getElementsByClassName('wrapper')[0]);
+                    res(divs);
+                }
+            )
+
+            task.then((data) => show(data))
+        } 
+
+        const find = (e, flag) => {
+            switch(flag){
+                case MIDDLE:
+                    if(e.firstElementChild){
+                        find(e.firstElementChild, flag);
+                    }
+                    displayActive(e);
+                    if(e.lastElementChild){
+                        find(e.lastElementChild, flag);
+                    }
+                break;
+                case END:
+                    if(e.firstElementChild){
+                        find(e.firstElementChild, flag);
+                    }
+                    if(e.lastElementChild){
+                        find(e.lastElementChild, flag);
+                    }
+                    displayActive(e);
+                break;
+                default:
+                break;
+            }
+            show(divs);
+        }
 
         const show = (divs) => {
             divs.forEach((div, i) => {
@@ -78,7 +126,7 @@
                         if(index>0){ divs[index-1].classList.remove('active') }
                         div.classList.add('active');
                         if(index==(divs.length-1)){
-                            setTimeout(() => {div.classList.remove('active')},500)
+                            setTimeout(() => {div.classList.remove('active')}, 500)
                         }
                     }, 500 * index)
                 })(i)
@@ -88,58 +136,6 @@
         const start = () => {
             const divs = [...document.getElementsByTagName('div')];
             show(divs);
-        }
-
-        const middle = () => {
-            let divs = [];
-
-            const displayActive = (e) => {
-                divs.push(e);
-            }
-
-            const find = (e) => {
-                if(e.firstElementChild){
-                    find(e.firstElementChild);
-                }
-                displayActive(e);
-                if(e.lastElementChild){
-                    find(e.lastElementChild);
-                }
-            }
-
-            const task = new Promise((res, rej) =>{
-                    find(document.getElementsByClassName('wrapper')[0]);
-                    res(divs);
-                }
-            )
-
-            task.then((data) => show(data))
-        }
-
-        const end = () => {
-            let divs = [];
-
-            const displayActive = (e) => {
-                divs.push(e);
-            }
-
-            const find = (e) => {
-                if(e.firstElementChild){
-                    find(e.firstElementChild);
-                }
-                if(e.lastElementChild){
-                    find(e.lastElementChild);
-                }
-                displayActive(e);
-            }
-
-            const task = new Promise((res, rej) =>{
-                    find(document.getElementsByClassName('wrapper')[0]);
-                    res(divs);
-                }
-            )
-
-            task.then((data) => show(data))
         }
  
     </script>
