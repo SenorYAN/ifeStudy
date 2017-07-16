@@ -16,6 +16,11 @@
             text-align: center;
         }
 
+        li {
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
         li .id, li .sex, .id, .sex {
             width: 15px;
         }
@@ -93,6 +98,60 @@
     }
 
     window.onscroll = createFunc((ctx, evt) => console.log('scroll', evt), 500)
+
+
+    var obj = {
+        a: '1',
+        b: '2',
+        c: {
+            d: '4',
+            e: '5',
+            f: {
+                g : '7'
+            }
+        },
+        h: [8]
+    }
+
+    var arr = [
+        1,
+        [
+            2,
+            [
+                3,
+                4
+            ]
+        ]
+    ]
+
+    
+
+    var flatten = function(obj) {
+        var output = {};
+        for(var key in obj) {
+            if(Object.prototype.toString.call(obj[key]) !== '[object Object]'){
+                output[key] = obj[key]
+            } else {
+                Object.assign(output, flatten(obj[key]))
+            }
+        }
+        return output
+    }
+
+    var flattenArr = function(arr) {
+        var output = [];
+        arr.forEach((item) => {
+            if(Object.prototype.toString.call(item) !== '[object Array]'){
+                output.push(item);
+            }else {
+                output = output.concat(flattenArr(item))
+            }
+        })
+        return output
+    }
+
+    
+    console.log(flattenArr(arr))
 
 </script>
 </body>
