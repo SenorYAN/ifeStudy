@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text">
+        {{ text }}
+    </div>
+    <script>
+        const Dep = function() { // 主题对象
+            this.subs = []; // 观察者数组
+        }
+
+        Dep.prototype = {
+            addSub(sub) { // 把观察者添加进数组
+                this.subs.push(sub);
+            },
+            notify() { // 所有观察者更新
+                console.log(this.subs);
+                this.subs.forEach((sub) => {
+                    sub.upDate();
+                })
+            }
+        }
+        
+        const Watcher = function(vm, node, name){ // 定义观察者
+            console.log(vm, node, name);
+            Dep.target = this;  // watcher复制给全局变量Dep.target
+            this.name = name;
+            this.node = node;
+            this.vm = vm;
+            this.upDate(); // 初始化更新
+            Dep.target = null;
+        }
+
+        Watcher.prototype = {
+            upDate() {
+                this.get();
+                this.node.nodeValue = this.value; // 更新视图
+            },
+            get() {
+                this.value = this.vm.data[this.name]; // 目前被观察的值，触发访问其属性的get
+            }
+        }
+
+        const Vue = function(options) {
+            this.data = options.data;
+            const data = this.data;
+
+            observe(data, this);//监听数据
+
+            const id = options.el;
+            const dom = nodeToFragment(document.getElementById(id), this);//编译HTML
+            document.getElementById(id).appendChild(dom);
+        }
+        
+        const binding = (node, vm) => {
+            const reg = /\{\{(.*)\}\}/;
+            // 元素节点
+            if(node.nodeType === 1){
+                const attrs = node.attributes;
+                [...attrs].forEach((attr) => {
+                    if(attr.nodeName == 'v-model'){ //获取v-model绑定的属性名
+                        const name = attr.nodeValue; //获取v-model的值
+                        node.addEventListener('input', function(e){
+                            vm.data[name] = e.target.value;
+                        })
+                        node.value = vm.data[name];
+                        node.removeAttribute('v-model');
+                    }
+                })
+            }
+            // 文本节点
+            if(node.nodeType === 3){
+                if(reg.test(node.nodeValue)){
+                    let name = RegExp.$1;
+                    name = name.trim();
+                    //node.nodeValue = vm.data[name];
+                    new Watcher(vm, node, name); //数据绑定节点创建观察者
+                }
+            }
+        }
+
+        const nodeToFragment = (node, vm) => {
+            let frag = document.createDocumentFragment();
+            let child;
+            while(child = node.firstChild) {
+                binding(child, vm);
+                frag.appendChild(child);
+            }
+            return frag;
+        }
+
+        const defineReactive = (obj, key, val) => {
+            const dep = new Dep();  // 给每一个属性都建立主题对象dep
+            console.log(key, dep)
+            Object.defineProperty(obj, key, {
+                get() {
+                    //添加订阅者watcher到主题对象Dep中
+                    if(Dep.target){
+                        dep.addSub(Dep.target);
+                    }
+                    return val;
+                },
+                set(newVal) {
+                    if(newVal === val) return;
+                    val = newVal;
+                    //发出通知
+                    dep.notify();
+                }
+            })
+        }
+
+        const observe = (obj, vm) => {
+            Object.keys(obj).forEach((key) => {
+                defineReactive(obj, key, obj[key])
+            })
+        }
+
+        const vm = new Vue({
+            el: 'app',
+            data: {
+                text: 'hhhhh'
+            }
+        })
+    </script>   
+</body>
+</html>
