@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #app{
+            display: flex;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            justify-content: center;
+            align-items: center;
+        }
+        .outer {
+            border: 2px solid pink;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            clip: rect(0px 50px 100px 0);
+            animation: spin 1s linear infinite;
+        }
+        .front{
+            transform: rotate(90deg);
+        }
+        .inner {
+            width: 60%;
+            height: 60%;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: lightcoral;
+            transform: rotate(225deg);
+            clip: rect(0px, 30px, 60px, 0px);
+            border-radius: 50%; 
+            animation: spin 4s linear infinite;
+        }
+        .back{
+            width: 0;
+            height: 0;
+            border: 30px solid palevioletred;
+            border-radius: 50%;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="outer front">
+            <div class="inner"></div>
+        </div>       
+        <div class="outer behind">
+            <div class="inner"></div>
+        </div>
+        <div class="back"></div>
+    </div>
+</body>
+</html>
