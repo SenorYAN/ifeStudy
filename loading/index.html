@@ -22,36 +22,61 @@
             width: 100px;
             height: 100px;
             position: absolute;
-            clip: rect(0px 50px 100px 0);
-            animation: spin 1s linear infinite;
+            clip: rect(0px 52px 104px 0);
+            animation: spin 0.5s linear infinite;
         }
         .front{
             transform: rotate(90deg);
         }
-        .inner {
-            width: 60%;
-            height: 60%;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            background: lightcoral;
-            transform: rotate(225deg);
-            clip: rect(0px, 30px, 60px, 0px);
-            border-radius: 50%; 
-            animation: spin 4s linear infinite;
-        }
-        .back{
-            width: 0;
-            height: 0;
-            border: 30px solid palevioletred;
+        .inner, .left, .right, .mask{
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            position: absolute;
+        }
+        .inner{
+            background: pink;
+        }
+        .left, .mask{
+            background: red;
+            clip: rect(0px, 40px, 80px, 0);
+        }
+        .left{
+            animation: spin 1s linear infinite;
+        }
+        .mask{
+            animation: mask 1s steps(1, end) infinite;
+        }
+        .right{
+            background: red;
+            clip: rect(0px, 80px, 80px, 40px);
+            animation: right 1s steps(1, end) infinite;
+        }
+        .mask{
+            background: pink;
         }
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
             }
             100% {
-                transform: rotate(360deg);
+                transform: rotate(-360deg);
+            }
+        }
+        @keyframes mask{
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        @keyframes right{
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
             }
         }
     </style>
@@ -59,12 +84,14 @@
 <body>
     <div id="app">
         <div class="outer front">
-            <div class="inner"></div>
         </div>       
         <div class="outer behind">
-            <div class="inner"></div>
         </div>
-        <div class="back"></div>
+        <div class="inner">
+            <div class="left"></div>
+            <div class="mask"></div>
+            <div class="right"></div>
+        </div>
     </div>
 </body>
 </html>
