@@ -24,9 +24,9 @@ class Carousel {
         slickDots.children[this.active].classList.add('slick-active');
         slickDots.addEventListener('click', (e) => {
             if(e.target.nodeName == 'BUTTON'){
-                slickDots.children[this.active].classList.remove('slick-active');
+                const prev = this.active;
                 this.active = e.target.innerText-1;
-                e.target.parentNode.classList.add('slick-active');
+                this.changeActive(prev, this.active);
                 this.handleClickButton(this.active);
             }
         });
@@ -34,11 +34,25 @@ class Carousel {
         window.addEventListener('resize', () => {
             throttle(this.init, this);
         })
+
+        this.selfSlide();
+    }
+    changeActive(prev, next) {
+       const slickDots = document.getElementsByClassName('slick-dots')[0]; 
+       slickDots.children[prev].classList.remove('slick-active'); 
+       slickDots.children[next].classList.add('slick-active'); 
     }
     handleClickButton(id) {
         const slickList = document.getElementsByClassName('slick-list')[0];
         slickList.style.transform = `translate3d(${-this.width * 4 / 5 * this.active}px, 0px, 0px)`;
-        console.log(this.active)
+        console.log(this.active);
+    }
+    selfSlide() {
+        setInterval(() => {
+            this.active = Number.parseInt(this.active + 1, 10) % 5;
+            this.changeActive(this.active-1<0?this.active+4:this.active-1, this.active);
+            this.handleClickButton(this.active);
+        }, 2000);
     }
     dataToNode() {
         let fragment = document.createDocumentFragment();
@@ -56,6 +70,7 @@ class Carousel {
         slickList.style.transform = 'translate3d(0px, 0px, 0px)';
 
         slickDots.className = 'slick-dots slide';
+  
 
         this.data.forEach((item) => {
             const slickSlide = document.createElement('div');
